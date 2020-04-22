@@ -3,8 +3,11 @@ module.exports = {
     fontFamily: {
       sans: "Montserrat, -apple-system, BlinkMacSystemFont"
     },
-    extend: {},
+    container: {
+      center: true
+    },
+    extend: {}
   },
   variants: {},
-  plugins: [],
-}
+  plugins: []
+};

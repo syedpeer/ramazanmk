@@ -83,7 +83,7 @@ function processGSheetResults(JSONResponse, returnAllResults, filter) {
   return filterResults(processedResults, filter);
 }
 
-const sheetProcessor = function (options, callback) {
+const sheetProcessor = function(options, callback) {
   sheetsApi(options.docId, options.sheetId).then(result => {
     const filteredResults = processGSheetResults(
       result,
