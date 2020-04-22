@@ -1,5 +1,5 @@
 <template>
-  <div id="app"></div>
+  <div id="app" class="font-sans antialiased flex flex-col"></div>
 </template>
 
 <script>
