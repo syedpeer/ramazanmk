@@ -9,11 +9,7 @@
 </template>
 
 <script>
-import Icon from "./Icon";
 export default {
-  components: {
-    Icon
-  },
   props: {
     time: {
       type: String

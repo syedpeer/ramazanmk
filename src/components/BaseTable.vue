@@ -1,17 +1,17 @@
 <template>
-  <div class="w-full bg-white shadow-input p-6 rounded-tl-2xl lg:rounded-tl-none lg:rounded-2xl">
-    <div v-for="n in 10" class="flex flex-row justify-between pt-4 pb-2 border-b border-gray-300">
-      <div class="flex flex-col">
-        <p class="text-xl font-semibold">26 Prill</p>
-        <p class="text-sm uppercase">E Hene</p>
+  <div class="w-full bg-white shadow-input p-6 rounded-tl-2xl lg:rounded-2xl">
+    <div v-for="(item, index) in this.items" class="flex flex-row pt-4 pb-2 border-b border-gray-300">
+      <div class="w-1/2 flex flex-col">
+        <p class="text-xl font-semibold">{{ dayNumber(item.data) }}</p>
+        <p class="text-sm uppercase">{{ dayText(item.data) }}</p>
       </div>
-      <div class="flex flex-col text-right">
+      <div class="w-1/4 flex flex-col items-end pr-4">
         <p class="text-sm">SYFYR</p>
-        <p class="text-xl font-semibold">03:00</p>
+        <p class="text-xl font-semibold">{{ item.sifir }}</p>
       </div>
-      <div class="flex flex-col text-right">
-        <p class="text-sm">IFTAR</p>
-        <p class="text-xl font-semibold">03:00</p>
+      <div class="w-1/4 flex flex-col items-end">
+        <p class="text-sm text-right">IFTAR</p>
+        <p class="text-xl font-semibold">{{ item.iftar }}</p>
       </div>
     </div>
   </div>
@@ -20,7 +20,16 @@
 <script>
 export default {
   props: {
+    items: Array
+  },
 
+  methods: {
+    dayNumber(value) {
+      return this.$dayjs(value).format("DD MMMM");
+    },
+    dayText(value) {
+      return this.$dayjs(value).format("dddd");
+    }
   }
 };
 </script>

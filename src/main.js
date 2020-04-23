@@ -7,6 +7,7 @@ import "@/assets/css/style.css";
 Vue.prototype.$dayjs = dayjs;
 
 window.GSheetReader = require("g-sheets-api");
+Vue.component("icon", () => import('./components/Icon.vue'));
 
 Vue.config.productionTip = false;
 
