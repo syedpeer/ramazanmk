@@ -3,6 +3,7 @@
     <div class="container mx-auto pt-32">
       <div class="max-w-md">
         <select
+          v-if="location.length"
           class="w-64 h-12 bg-gray-300"
           v-model="city"
           name="city"
@@ -16,7 +17,7 @@
             {{ item.name }}
           </option>
         </select>
-        <div class="flex flex-row mt-12 justify-between">
+        <div v-if="schedule.length" class="flex flex-row mt-12 justify-between">
           <div class="flex flex-col">
             <p v-for="item in getIftarTime" :key="item.id">{{ item }}</p>
           </div>
