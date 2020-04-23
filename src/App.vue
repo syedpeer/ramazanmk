@@ -3,10 +3,7 @@
     <div class="container mx-auto">
       <div class="lg:max-w-5xl">
         <div class="flex flex-row justify-between items-center mt-6">
-          <div class="flex flex-col">
-            <h1 class="text-3xl text-primary lg:text-5xl font-semibold">Ramazan</h1>
-            <div class="bg-white rounded mt-2 h-2 w-20"></div>
-          </div>
+            <Logo/>
 
           <div @click="menu = !menu" class="w-10 h-10 z-20 rounded-full bg-white shadow-input flex items-center justify-center cursor-pointer relative">
             <icon name="menu" class="w-6 h-6 text-primary"></icon>
@@ -19,15 +16,15 @@
                     leave-active-class="transition-all ease-in duration-75"
 >
               <div v-show="menu" class="md:w-64 origin-top-right bg-white z-20 shadow-input absolute top-0 right-0 rounded-xl overflow-hidden mt-12">
-                  <div class="flex flex-row items-center px-8 py-5 text-primary text-xl border-b border-gray-300 hover:bg-gray-300">
+                  <div @click="setLocale('sq')" class="flex flex-row items-center px-8 py-5 text-primary text-xl border-b border-gray-300 hover:bg-gray-300">
                       <icon name="albania" class="w-8 h-8 mr-6"></icon>
                       Shqip
                   </div>
-                  <div class="flex flex-row items-center px-8 py-5 text-primary text-xl border-b border-gray-300 hover:bg-gray-300">
+                  <div @click="setLocale('tr')" class="flex flex-row items-center px-8 py-5 text-primary text-xl border-b border-gray-300 hover:bg-gray-300">
                     <icon name="turkey" class="w-8 h-8 mr-6"></icon>
                     Türkçe
                   </div>
-                  <div class="flex flex-row items-center px-8 py-5 text-primary text-xl hover:bg-gray-300">
+                  <div @click="setLocale('mk')" class="flex flex-row items-center px-8 py-5 text-primary text-xl hover:bg-gray-300">
                     <icon name="macedonia" class="w-8 h-8 mr-6"></icon>
                       Македонски
                   </div>
@@ -38,16 +35,16 @@
         </div>
 
         <div class="lg:grid lg:grid-cols-2 lg:gap-6">
-          <div class="">
+          <div>
             <base-select v-model="city" class="mt-12" :options="location"></base-select>
-            <base-date class="mt-8" date="28 Prill" year="2020"></base-date>
+            <base-date class="mt-8"></base-date>
             <div class="grid grid-cols-2 gap-6 mt-8">
-              <base-card icon="sun" :time="formatDate(this.current.schedule.sifir)" name="Syfyr"></base-card>
-              <base-card icon="moon" :time="formatDate(this.current.schedule.iftar)" name="Iftar"></base-card>
+              <base-card icon="sun" :time="formatDate(this.current.schedule.sifir)" :name="$t('syfyr')"></base-card>
+              <base-card icon="moon" :time="formatDate(this.current.schedule.iftar)" :name="$t('iftar')"></base-card>
             </div>
 
             <div class="mt-8">
-              <base-card name="Koha e mbetur" icon="timer">
+              <base-card :name="$t('timeleft')" icon="timer">
                 <timer :start="current.period"></timer>
               </base-card>
             </div>
@@ -58,6 +55,14 @@
           </div>
         </div>
 
+
+         <div class="grid lg:grid-cols-3 gap-6 mt-8">
+          <base-card :time="this.$dayjs('2020-05-24 05:46').format('DD MMMM - HH:mm')" :name="$t('bajram')"></base-card>
+          <base-card :time="this.$dayjs('2020-05-10').format('DD MMMM')" :name="$t('bedri')"></base-card>
+          <base-card :time="this.$dayjs('2020-05-19').format('DD MMMM')" :name="$t('kadri')"></base-card>
+        </div>
+
+        <base-footer></base-footer>
       </div>
     </div>
   </div>
@@ -66,6 +71,8 @@
 <script>
 import json from "./data/schedule.json";
 import Timer from "./components/Timer";
+import Logo from "./components/Logo";
+import BaseFooter from "./components/BaseFooter";
 import BaseSelect from "./components/BaseSelect";
 import BaseDate from "./components/BaseDate";
 import BaseCard from "./components/BaseCard";
@@ -75,6 +82,8 @@ export default {
   name: "app",
   components: {
     Timer,
+    Logo,
+    BaseFooter,
     BaseSelect,
     BaseDate,
     BaseCard,
@@ -82,6 +91,7 @@ export default {
   },
   data() {
     return {
+      language: localStorage.getItem("language") || "sq",
       city: localStorage.getItem("city") || "GV",
       current: {
         date: this.$dayjs(new Date()).format("YYYY-MM-DD HH:mm:ss"),
@@ -164,8 +174,13 @@ export default {
 
         this.current.period = this.getFullDate(date.sifir);
       }
+    },
+    setLocale(string) {
+      this.$i18n.locale = string;
+      this.language = string;
+      this.$dayjs.locale(string);
+      localStorage.setItem("language", string);
     }
-
   },
   watch: {
     city(value) {
@@ -189,7 +204,8 @@ export default {
     this.getData();
     this.checkTimePeriod();
 
-    this.$dayjs.locale("sq");
+    this.$dayjs.locale(this.language);
+    this.$i18n.locale = this.language;
   }
 };
 </script>

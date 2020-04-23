@@ -6,11 +6,11 @@
         <p class="text-sm uppercase">{{ dayText(item.data) }}</p>
       </div>
       <div class="w-1/4 flex flex-col items-end pr-4">
-        <p class="text-sm">SYFYR</p>
+        <p class="text-sm uppercase">{{ $t('syfyr') }}</p>
         <p class="text-xl font-semibold">{{ item.sifir }}</p>
       </div>
       <div class="w-1/4 flex flex-col items-end">
-        <p class="text-sm text-right">IFTAR</p>
+        <p class="text-sm text-right uppercase">{{ $t('iftar') }}</p>
         <p class="text-xl font-semibold">{{ item.iftar }}</p>
       </div>
     </div>
