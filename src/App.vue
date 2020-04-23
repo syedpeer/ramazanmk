@@ -2,7 +2,7 @@
   <div id="app" class="font-sans antialiased flex flex-col">
     <div class="container mx-auto pt-32">
       <div class="max-w-md">
-        <div :start="this.current" class="mb-4 font-bold text-xl"></div>
+        <timer :start="this.current" class="mb-4 font-bold text-xl"></timer>
         <select
           v-if="location.length"
           class="w-64 h-12 bg-gray-300"
@@ -34,15 +34,18 @@
 
 <script>
 import json from "./data/schedule.json";
+import Timer from "./components/Timer";
 
 export default {
   name: "app",
-  components: {},
+  components: {
+    Timer,
+  },
   data() {
     return {
-      date: this.$dayjs(new Date()).format("YYYY-MM-DD HH:mm:ss"),
       city: "GV",
       current: {
+        date: this.$dayjs(new Date()).format("YYYY-MM-DD HH:mm:ss"),
         city: null,
         schedule: null
       },
@@ -64,7 +67,7 @@ export default {
         .format("HH:mm");
     },
     getToday(day = 1) {
-      let date = this.$dayjs(this.date)
+      let date = this.$dayjs(this.current.date)
         .add(day, "day")
         .format("YYYY-MM-DD");
 
@@ -87,7 +90,7 @@ export default {
     },
 
     getTodayIftar() {
-      // TODO: Switch to this.date
+      // TODO: Switch to this.current.date
       const today = new Date("2020-04-24 20:36");
       const difference = this.$dayjs(this.current.schedule.iftar).diff(
         today,

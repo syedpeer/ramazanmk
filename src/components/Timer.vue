@@ -28,7 +28,7 @@ export default {
       var remaining = Math.abs(
         Date.parse(this.start.schedule.iftar) - Date.parse(moment)
       );
-      console.log(remaining);
+      console.log(this.start);
       this.totalTime = remaining / 1000;
       this.timer = setInterval(() => this.countdown(), 1000);
     },
