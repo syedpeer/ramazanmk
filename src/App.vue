@@ -11,7 +11,7 @@
     <div class="container mt-16">
       <div style="display: row;" class="flex flex-row">
         <div class="w-1/3">
-          <div class="bg-white" style="border-radius:16px;">
+          <div class="bg-white overflow-hidden" style="border-radius:16px;">
             <svg
               width="32"
               height="32"
