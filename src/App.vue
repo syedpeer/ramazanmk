@@ -25,8 +25,10 @@
           <div class="flex flex-col">
             <p v-for="item in getSyfirTime" :key="item.id">{{ item }}</p>
           </div>
+        </div>
 
-          <div class="mt-32 font-bold text-xl"></div>
+        <div class="mt-32 font-bold text-xl">
+          {{ getTodayIftar }}
         </div>
       </div>
     </div>
@@ -34,7 +36,6 @@
 </template>
 
 <script>
-import dayjs from "dayjs";
 import json from "./data/schedule.json";
 
 export default {
@@ -42,6 +43,7 @@ export default {
   components: {},
   data() {
     return {
+      date: this.$dayjs(new Date()).format('YYYY-MM-DD HH:mm:ss'),
       city: "GV",
       current: {
         city: null,
@@ -60,13 +62,13 @@ export default {
       this.current.schedule = this.getToday();
     },
     formatDate(item) {
-      return dayjs(item)
+      return this.$dayjs(item)
         .add(this.current.city.value, "minute")
         .format("HH:mm");
     },
-    getToday() {
-      let date = dayjs(new Date())
-        .add(6, "day")
+    getToday(day = 1) {
+     let date = this.$dayjs(this.date)
+        .add(day, "day")
         .format("YYYY-MM-DD");
 
       return this.schedule.find(item => {
@@ -85,6 +87,22 @@ export default {
       return this.schedule.map(item => {
         return this.formatDate(item.sifir);
       });
+    },
+
+    getTodayIftar() {
+      // TODO: Switch to this.date
+      const today = new Date('2020-04-24 20:36');
+      const difference = this.$dayjs(this.current.schedule.iftar).diff(today, 'hour', true);
+
+      if (difference > 0) {
+        return this.$dayjs(this.current.schedule.iftar);
+      }
+
+      if (difference < 0) {
+        const date = this.getToday(2);
+
+        return this.formatDate(date.iftar);
+      }
     }
   },
   watch: {
@@ -92,8 +110,10 @@ export default {
       this.getCurrentData();
     }
   },
-  mounted() {
+  created() {
     this.getCurrentData();
+
+    this.$dayjs.locale('sq');
   }
 };
 </script>
