@@ -2,26 +2,62 @@
   <div id="app" class="font-sans antialiased min-h-screen flex flex-col bg-gradient">
     <div class="container mx-auto">
       <div class="lg:max-w-5xl">
-        <div class="flex flex-col mt-6">
-          <h1 class="text-3xl lg:text-5xl font-semibold">Ramazan</h1>
-          <div class="bg-white rounded mt-2 h-2 w-20"></div>
-        </div>
-        <base-select v-model="city" class="mt-12" :options="location"></base-select>
-        <base-date class="mt-8" date="28 Prill" year="2020"></base-date>
-        <div class="grid grid-cols-2 gap-6 mt-8">
-          <base-card icon="sun" :time="formatDate(this.current.schedule.sifir)" name="Syfyr"></base-card>
-          <base-card icon="moon" :time="formatDate(this.current.schedule.iftar)" name="Iftar"></base-card>
+        <div class="flex flex-row justify-between items-center mt-6">
+          <div class="flex flex-col">
+            <h1 class="text-3xl text-primary lg:text-5xl font-semibold">Ramazan</h1>
+            <div class="bg-white rounded mt-2 h-2 w-20"></div>
+          </div>
+
+          <div @click="menu = !menu" class="w-10 h-10 z-20 rounded-full bg-white shadow-input flex items-center justify-center cursor-pointer relative">
+            <icon name="menu" class="w-6 h-6 text-primary"></icon>
+            <transition
+                    enter-active-class="transition-all ease-out duration-100"
+                    enter-class="transform opacity-0 scale-95"
+                    enter-to="transform opacity-0 scale-95"
+                    leave-class="transform opacity-100 scale-100"
+                    leave-to-class="transform opacity-0 scale-95"
+                    leave-active-class="transition-all ease-in duration-75"
+>
+              <div v-show="menu" class="md:w-64 origin-top-right bg-white z-20 shadow-input absolute top-0 right-0 rounded-xl overflow-hidden mt-12">
+                  <div class="flex flex-row items-center px-8 py-5 text-primary text-xl border-b border-gray-300 hover:bg-gray-300">
+                      <icon name="albania" class="w-8 h-8 mr-6"></icon>
+                      Shqip
+                  </div>
+                  <div class="flex flex-row items-center px-8 py-5 text-primary text-xl border-b border-gray-300 hover:bg-gray-300">
+                    <icon name="turkey" class="w-8 h-8 mr-6"></icon>
+                    Türkçe
+                  </div>
+                  <div class="flex flex-row items-center px-8 py-5 text-primary text-xl hover:bg-gray-300">
+                    <icon name="macedonia" class="w-8 h-8 mr-6"></icon>
+                      Македонски
+                  </div>
+              </div>
+            </transition>
+          </div>
+         <div @click="menu = false" v-show="menu" style="background-color: rgba(0, 0, 0, 0.69)" class="absolute inset-0 w-full h-full z-10"></div>
         </div>
 
-        <div class="mt-8">
-            <base-card name="Koha e mbetur" icon="timer">
+        <div class="lg:grid lg:grid-cols-2 lg:gap-6">
+          <div class="">
+            <base-select v-model="city" class="mt-12" :options="location"></base-select>
+            <base-date class="mt-8" date="28 Prill" year="2020"></base-date>
+            <div class="grid grid-cols-2 gap-6 mt-8">
+              <base-card icon="sun" :time="formatDate(this.current.schedule.sifir)" name="Syfyr"></base-card>
+              <base-card icon="moon" :time="formatDate(this.current.schedule.iftar)" name="Iftar"></base-card>
+            </div>
+
+            <div class="mt-8">
+              <base-card name="Koha e mbetur" icon="timer">
                 <timer :start="current.period"></timer>
-            </base-card>
+              </base-card>
+            </div>
+          </div>
+
+          <div class="-mx-6 lg:mx-0 mt-10">
+            <base-table :items="this.modified"></base-table>
+          </div>
         </div>
 
-        <div class="-mx-6 lg:mx-0 mt-10">
-          <base-table :items="this.modified"></base-table>
-        </div>
       </div>
     </div>
   </div>
@@ -53,6 +89,7 @@ export default {
         schedule: null,
         period: null,
       },
+      menu: false,
       modified: null,
       schedule: json.schedule,
       location: json.city
@@ -64,18 +101,12 @@ export default {
         return item.shortcode === this.city;
       });
 
-      // let schedule = this.getToday();
-
-      // console.log(this.$dayjs(schedule.iftar)
-      //         .add(this.current.city.value, "minute")
-      //         .format("YYYY-MM-DD HH:mm:ss"));
-
       this.current.schedule = this.getToday();
     },
     getFullDate(item) {
       return this.$dayjs(item)
-              .add(this.current.city.value, "minute")
-              .format("YYYY-MM-DD HH:mm:ss");
+        .add(this.current.city.value, "minute")
+        .format("YYYY-MM-DD HH:mm:ss");
     },
     formatDate(item) {
       return this.$dayjs(item)
@@ -116,12 +147,9 @@ export default {
 
     checkTimePeriod() {
       // TODO: switch with this.current.date
-      const today = new Date("2020-04-24 16:36");
+      const today = new Date("2020-04-23 20:36");
       const diffIftar = this.$dayjs(this.current.schedule.iftar).diff(today, "hour", true);
       const diffSifir = this.$dayjs(this.current.schedule.sifir).diff(today, "hour", true);
-
-      console.log(diffSifir);
-      console.log(diffIftar);
 
       if (diffSifir > 0) {
         this.current.period = this.getFullDate(this.current.schedule.sifir);
@@ -145,6 +173,15 @@ export default {
       this.getData();
 
       localStorage.setItem("city", value);
+    },
+    menu(value){
+      const bodyTag = document.querySelector('body');
+
+      if (value) {
+        bodyTag.classList.add('overflow-hidden');
+      } else {
+        bodyTag.classList.remove('overflow-hidden');
+      }
     }
   },
   created() {

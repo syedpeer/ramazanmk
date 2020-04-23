@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full text-primary bg-white shadow-input p-6 rounded-tl-2xl lg:rounded-2xl">
+  <div class="w-full text-primary overflow-y-auto bg-white shadow-input p-6 rounded-tl-2xl lg:rounded-tl-2xl lg:rounded-bl-2xl lg:max-h-50">
     <div v-for="(item, index) in this.items" class="flex flex-row pt-4 pb-2 border-b border-gray-300">
       <div class="w-1/2 flex flex-col">
         <p class="text-xl font-semibold">{{ dayNumber(item.data) }}</p>
