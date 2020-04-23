@@ -77,6 +77,7 @@ import BaseSelect from "./components/BaseSelect";
 import BaseDate from "./components/BaseDate";
 import BaseCard from "./components/BaseCard";
 import BaseTable from "./components/BaseTable";
+import customParseFormat from "dayjs/plugin/customParseFormat";
 
 export default {
   name: "app",
@@ -203,6 +204,7 @@ export default {
     this.getData();
     this.checkTimePeriod();
 
+    this.$dayjs.extend(customParseFormat);
     this.$dayjs.locale(this.language);
     this.$i18n.locale = this.language;
   }
