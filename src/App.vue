@@ -59,6 +59,12 @@ export default {
         return item.shortcode === this.city;
       });
 
+      // let schedule = this.getToday();
+
+      // console.log(this.$dayjs(schedule.iftar)
+      //         .add(this.current.city.value, "minute")
+      //         .format("YYYY-MM-DD HH:mm:ss"));
+
       this.current.schedule = this.getToday();
     },
     formatDate(item) {
@@ -91,7 +97,7 @@ export default {
 
     getTodayIftar() {
       // TODO: Switch to this.current.date
-      const today = new Date("2020-04-24 20:36");
+      const today = new Date("2020-04-24 16:36");
       const difference = this.$dayjs(this.current.schedule.iftar).diff(
         today,
         "hour",
