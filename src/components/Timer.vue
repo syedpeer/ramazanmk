@@ -1,0 +1,74 @@
+<template>
+  <div id="timer">
+    <span id="hours">{{ hours }}</span>
+    <span id="middle">:</span>
+    <span id="minutes">{{ minutes }}</span>
+    <span id="middle">:</span>
+    <span id="seconds">{{ seconds }}</span>
+    <br />
+    <span>{{ start.iftar }}</span>
+  </div>
+</template>
+
+<script>
+export default {
+  props: ["start"],
+  data() {
+    return {
+      timer: null,
+      moment: null,
+      totalTime: null,
+      resetButton: true
+    };
+  },
+  methods: {
+    startTimer: function() {
+      let moment = this.$dayjs(new Date()).format("YYYY-MM-DD HH:mm:ss");
+      this.moment = moment;
+      var remaining = Math.abs(
+        Date.parse(this.start.schedule.iftar) - Date.parse(moment)
+      );
+      console.log(this.start);
+      this.totalTime = remaining / 1000;
+      this.timer = setInterval(() => this.countdown(), 1000);
+    },
+    stopTimer: function() {
+      clearInterval(this.timer);
+      this.timer = null;
+      this.resetButton = true;
+    },
+    resetTimer: function() {
+      this.totalTime = 25 * 60;
+      clearInterval(this.timer);
+      this.timer = null;
+      this.resetButton = false;
+    },
+    padTime: function(time) {
+      return (time < 10 ? "0" : "") + time;
+    },
+    countdown: function() {
+      this.totalTime--;
+    }
+  },
+  computed: {
+    hours: function() {
+      const hours = Math.floor(this.totalTime / 3600);
+      return this.padTime(hours);
+    },
+    minutes: function() {
+      const minutes = Math.floor((this.totalTime - this.hours * 3600) / 60);
+      return this.padTime(minutes);
+    },
+    seconds: function() {
+      const seconds = this.totalTime - this.hours * 3600 - this.minutes * 60;
+      return this.padTime(seconds);
+    }
+  },
+  mounted() {
+    console.log(this.start);
+  },
+  created() {
+    this.startTimer();
+  }
+};
+</script>
