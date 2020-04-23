@@ -39,7 +39,7 @@ import Timer from "./components/Timer";
 export default {
   name: "app",
   components: {
-    Timer,
+    Timer
   },
   data() {
     return {
@@ -58,6 +58,12 @@ export default {
       this.current.city = this.location.find(item => {
         return item.shortcode === this.city;
       });
+
+      // let schedule = this.getToday();
+
+      // console.log(this.$dayjs(schedule.iftar)
+      //         .add(this.current.city.value, "minute")
+      //         .format("YYYY-MM-DD HH:mm:ss"));
 
       this.current.schedule = this.getToday();
     },
@@ -91,7 +97,7 @@ export default {
 
     getTodayIftar() {
       // TODO: Switch to this.current.date
-      const today = new Date("2020-04-24 20:36");
+      const today = new Date("2020-04-24 16:36");
       const difference = this.$dayjs(this.current.schedule.iftar).diff(
         today,
         "hour",
