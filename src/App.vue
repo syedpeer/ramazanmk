@@ -94,7 +94,7 @@ export default {
       language: localStorage.getItem("language") || "sq",
       city: localStorage.getItem("city") || "GV",
       current: {
-        date: this.$dayjs(new Date()).format("YYYY-MM-DD HH:mm:ss"),
+        date: this.$dayjs(new Date()).format(),
         city: null,
         schedule: null,
         period: null,
@@ -159,7 +159,6 @@ export default {
       const diffIftar = this.$dayjs(this.current.schedule.iftar).diff(this.current.date, "hour", true);
       const diffSifir = this.$dayjs(this.current.schedule.sifir).diff(this.current.date, "hour", true);
 
-      console.log(diffSifir);
 
       if (diffSifir > 0) {
         this.current.period = this.getFullDate(this.current.schedule.sifir);
