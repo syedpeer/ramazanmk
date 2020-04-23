@@ -4,7 +4,7 @@ module.exports = {
       sans: "Montserrat, -apple-system, BlinkMacSystemFont"
     },
     container: {
-      padding: '1.5rem',
+      padding: "1.5rem",
       center: true
     },
     extend: {
@@ -17,10 +17,10 @@ module.exports = {
       },
       borderRadius: {
         xl: "16px",
-        "2xl": "48px",
+        "2xl": "48px"
       },
       maxHeight: {
-        "50": "550px",
+        "50": "550px"
       }
     }
   },

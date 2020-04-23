@@ -22,7 +22,11 @@ export default {
   methods: {
     startTimer() {
       let moment = this.$dayjs();
-      let remaining = this.$dayjs(this.current).diff(moment, "millisecond", true);
+      let remaining = this.$dayjs(this.current).diff(
+        moment,
+        "millisecond",
+        true
+      );
 
       this.totalTime = remaining / 1000;
       this.timer = setInterval(() => this.countdown(), 1000);
@@ -55,7 +59,9 @@ export default {
       return this.padTime(minutes);
     },
     seconds: function() {
-      const seconds = Math.floor(this.totalTime - this.hours * 3600 - this.minutes * 60);
+      const seconds = Math.floor(
+        this.totalTime - this.hours * 3600 - this.minutes * 60
+      );
       return this.padTime(seconds);
     }
   },
@@ -68,6 +74,6 @@ export default {
       this.resetTimer();
       this.startTimer();
     }
-  },
+  }
 };
 </script>
