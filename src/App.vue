@@ -2,7 +2,7 @@
   <div id="app" class="font-sans antialiased flex flex-col">
     <div class="container mx-auto pt-32">
       <div class="max-w-md">
-        <timer :start="this.current" class="mb-4 font-bold text-xl"></timer>
+        <timer start="2020-04-24 14:30:00" class="mb-4 font-bold text-xl"></timer>
         <select
           v-if="location.length"
           class="w-64 h-12 bg-gray-300"
