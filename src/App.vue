@@ -156,10 +156,10 @@ export default {
     },
 
     checkTimePeriod() {
-      // TODO: switch with this.current.date
-      const today = new Date("2020-04-23 20:36");
-      const diffIftar = this.$dayjs(this.current.schedule.iftar).diff(today, "hour", true);
-      const diffSifir = this.$dayjs(this.current.schedule.sifir).diff(today, "hour", true);
+      const diffIftar = this.$dayjs(this.current.schedule.iftar).diff(this.current.date, "hour", true);
+      const diffSifir = this.$dayjs(this.current.schedule.sifir).diff(this.current.date, "hour", true);
+
+      console.log(diffSifir);
 
       if (diffSifir > 0) {
         this.current.period = this.getFullDate(this.current.schedule.sifir);
@@ -170,8 +170,7 @@ export default {
       }
 
       if (diffSifir < 0 && diffIftar < 0) {
-        let date = this.getToday(2);
-
+        let date = this.getToday(1);
         this.current.period = this.getFullDate(date.sifir);
       }
     },
@@ -185,6 +184,7 @@ export default {
   watch: {
     city(value) {
       this.getCurrentData();
+      this.checkTimePeriod();
       this.getData();
 
       localStorage.setItem("city", value);
