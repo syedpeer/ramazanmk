@@ -94,7 +94,7 @@ export default {
       language: localStorage.getItem("language") || "sq",
       city: localStorage.getItem("city") || "GV",
       current: {
-        date: this.$dayjs(new Date()).format(),
+        date: this.$dayjs(),
         city: null,
         schedule: null,
         period: null,

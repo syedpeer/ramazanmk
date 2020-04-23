@@ -21,7 +21,7 @@ export default {
   },
   methods: {
     startTimer() {
-      let moment = this.$dayjs(new Date());
+      let moment = this.$dayjs();
       let remaining = Math.abs(Date.parse(this.current) - Date.parse(moment));
       this.totalTime = remaining / 1000;
       this.timer = setInterval(() => this.countdown(), 1000);
