@@ -4,12 +4,10 @@
 
 <script>
 import sheetReader from "./modules/sheetReader";
-import Icon from "./components/Icon";
 
 export default {
   name: "app",
   components: {
-    Icon,
   },
   data() {
     return {
