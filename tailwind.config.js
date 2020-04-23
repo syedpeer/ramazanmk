@@ -6,7 +6,11 @@ module.exports = {
     container: {
       center: true
     },
-    extend: {}
+    extend: {
+      boxShadow: {
+        input: "0px 12px 30px rgba(0, 0, 0, 0.16)"
+      }
+    }
   },
   variants: {},
   plugins: []
