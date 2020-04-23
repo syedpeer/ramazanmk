@@ -1,8 +1,5 @@
 <template>
-  <div
-    id="app"
-    class="font-sans antialiased min-h-screen flex flex-col bg-gradient"
-  >
+  <div id="app" class="font-sans antialiased min-h-screen flex flex-col bg-gradient">
     <div class="container mx-auto">
       <div class="lg:max-w-5xl">
         <div class="flex flex-col mt-6">
@@ -18,7 +15,7 @@
         </div>
 
         <div class="-mx-6 lg:mx-0 mt-10">
-           <base-table :items="this.modified"></base-table>
+          <base-table :items="this.modified"></base-table>
         </div>
       </div>
     </div>
@@ -42,7 +39,7 @@ export default {
   },
   data() {
     return {
-      city: localStorage.getItem('city') || "GV",
+      city: localStorage.getItem("city") || "GV",
       current: {
         date: this.$dayjs(new Date()).format("YYYY-MM-DD HH:mm:ss"),
         city: null,

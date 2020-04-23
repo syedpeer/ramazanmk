@@ -5,8 +5,6 @@
     <span id="minutes">{{ minutes }}</span>
     <span id="middle">:</span>
     <span id="seconds">{{ seconds }}</span>
-    <br />
-    <span>{{ start.iftar }}</span>
   </div>
 </template>
 
@@ -18,17 +16,14 @@ export default {
       timer: null,
       moment: null,
       totalTime: null,
-      resetButton: true
+      resetButton: true,
+      current: this.start
     };
   },
   methods: {
     startTimer: function() {
       let moment = this.$dayjs(new Date()).format("YYYY-MM-DD HH:mm:ss");
-      this.moment = moment;
-      var remaining = Math.abs(
-        Date.parse(this.start.schedule.iftar) - Date.parse(moment)
-      );
-      console.log(this.start);
+      var remaining = Math.abs(Date.parse(this.current) - Date.parse(moment));
       this.totalTime = remaining / 1000;
       this.timer = setInterval(() => this.countdown(), 1000);
     },
@@ -64,11 +59,13 @@ export default {
       return this.padTime(seconds);
     }
   },
-  mounted() {
-    console.log(this.start);
-  },
   created() {
     this.startTimer();
-  }
+  },
+  watch: {
+    start() {
+      this.current = this.start;
+    }
+  },
 };
 </script>
