@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="font-sans antialiased min-h-screen flex flex-col bg-gradient">
     <div class="container mx-auto">
-      <div class="lg:max-w-5xl">
+      <div class="lg:max-w-5xl lg:mx-auto">
         <div class="flex flex-row justify-between items-center mt-6">
             <Logo/>
 
@@ -123,7 +123,7 @@ export default {
         .add(this.current.city.value, "minute")
         .format("HH:mm");
     },
-    getToday(day = 1) {
+    getToday(day = 0) {
       let date = this.$dayjs(this.current.date)
         .add(day, "day")
         .format("YYYY-MM-DD");
