@@ -14,34 +14,33 @@ export default {
   data() {
     return {
       timer: null,
-      moment: null,
       totalTime: null,
       resetButton: true,
       current: this.start
     };
   },
   methods: {
-    startTimer: function() {
+    startTimer() {
       let moment = this.$dayjs(new Date()).format("YYYY-MM-DD HH:mm:ss");
-      var remaining = Math.abs(Date.parse(this.current) - Date.parse(moment));
+      let remaining = Math.abs(Date.parse(this.current) - Date.parse(moment));
       this.totalTime = remaining / 1000;
       this.timer = setInterval(() => this.countdown(), 1000);
     },
-    stopTimer: function() {
+    stopTimer() {
       clearInterval(this.timer);
       this.timer = null;
       this.resetButton = true;
     },
-    resetTimer: function() {
+    resetTimer() {
       this.totalTime = 25 * 60;
       clearInterval(this.timer);
       this.timer = null;
       this.resetButton = false;
     },
-    padTime: function(time) {
+    padTime(time) {
       return (time < 10 ? "0" : "") + time;
     },
-    countdown: function() {
+    countdown() {
       this.totalTime--;
     }
   },
@@ -65,6 +64,8 @@ export default {
   watch: {
     start() {
       this.current = this.start;
+      this.resetTimer();
+      this.startTimer();
     }
   },
 };

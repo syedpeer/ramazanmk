@@ -8,6 +8,10 @@ module.exports = {
       center: true
     },
     extend: {
+      colors: {
+        primary: "#3D003E",
+        secondary: "#5856D6"
+      },
       boxShadow: {
         input: "0px 12px 30px rgba(0, 0, 0, 0.16)"
       },

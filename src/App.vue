@@ -8,10 +8,15 @@
         </div>
         <base-select v-model="city" class="mt-12" :options="location"></base-select>
         <base-date class="mt-8" date="28 Prill" year="2020"></base-date>
-
         <div class="grid grid-cols-2 gap-6 mt-8">
-          <base-card icon="sun" time="03:00" name="Syfyr"></base-card>
-          <base-card icon="moon" time="03:00" name="Iftar"></base-card>
+          <base-card icon="sun" :time="formatDate(this.current.schedule.sifir)" name="Syfyr"></base-card>
+          <base-card icon="moon" :time="formatDate(this.current.schedule.iftar)" name="Iftar"></base-card>
+        </div>
+
+        <div class="mt-8">
+            <base-card name="Koha e mbetur" icon="timer">
+                <timer :start="current.period"></timer>
+            </base-card>
         </div>
 
         <div class="-mx-6 lg:mx-0 mt-10">
@@ -24,6 +29,7 @@
 
 <script>
 import json from "./data/schedule.json";
+import Timer from "./components/Timer";
 import BaseSelect from "./components/BaseSelect";
 import BaseDate from "./components/BaseDate";
 import BaseCard from "./components/BaseCard";
@@ -32,6 +38,7 @@ import BaseTable from "./components/BaseTable";
 export default {
   name: "app",
   components: {
+    Timer,
     BaseSelect,
     BaseDate,
     BaseCard,
@@ -43,7 +50,8 @@ export default {
       current: {
         date: this.$dayjs(new Date()).format("YYYY-MM-DD HH:mm:ss"),
         city: null,
-        schedule: null
+        schedule: null,
+        period: null,
       },
       modified: null,
       schedule: json.schedule,
@@ -63,6 +71,11 @@ export default {
       //         .format("YYYY-MM-DD HH:mm:ss"));
 
       this.current.schedule = this.getToday();
+    },
+    getFullDate(item) {
+      return this.$dayjs(item)
+              .add(this.current.city.value, "minute")
+              .format("YYYY-MM-DD HH:mm:ss");
     },
     formatDate(item) {
       return this.$dayjs(item)
@@ -99,28 +112,32 @@ export default {
       }
 
       this.modified = output;
-    }
-  },
-  computed: {
-    getTodayIftar() {
-      // TODO: Switch to this.current.date
+    },
+
+    checkTimePeriod() {
+      // TODO: switch with this.current.date
       const today = new Date("2020-04-24 16:36");
-      const difference = this.$dayjs(this.current.schedule.iftar).diff(
-        today,
-        "hour",
-        true
-      );
+      const diffIftar = this.$dayjs(this.current.schedule.iftar).diff(today, "hour", true);
+      const diffSifir = this.$dayjs(this.current.schedule.sifir).diff(today, "hour", true);
 
-      if (difference > 0) {
-        return this.$dayjs(this.current.schedule.iftar);
+      console.log(diffSifir);
+      console.log(diffIftar);
+
+      if (diffSifir > 0) {
+        this.current.period = this.getFullDate(this.current.schedule.sifir);
       }
 
-      if (difference < 0) {
-        const date = this.getToday(2);
+      if (diffSifir < 0 && diffIftar > 0) {
+        this.current.period = this.getFullDate(this.current.schedule.iftar);
+      }
 
-        return this.formatDate(date.iftar);
+      if (diffSifir < 0 && diffIftar < 0) {
+        let date = this.getToday(2);
+
+        this.current.period = this.getFullDate(date.sifir);
       }
     }
+
   },
   watch: {
     city(value) {
@@ -133,6 +150,7 @@ export default {
   created() {
     this.getCurrentData();
     this.getData();
+    this.checkTimePeriod();
 
     this.$dayjs.locale("sq");
   }
