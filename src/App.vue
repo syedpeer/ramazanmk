@@ -13,8 +13,7 @@
                     enter-to="transform opacity-0 scale-95"
                     leave-class="transform opacity-100 scale-100"
                     leave-to-class="transform opacity-0 scale-95"
-                    leave-active-class="transition-all ease-in duration-75"
->
+                    leave-active-class="transition-all ease-in duration-75">
               <div v-show="menu" class="md:w-64 origin-top-right bg-white z-20 shadow-input absolute top-0 right-0 rounded-xl overflow-hidden mt-12">
                   <div @click="setLocale('sq')" class="flex flex-row items-center px-8 py-5 text-primary text-xl border-b border-gray-300 hover:bg-gray-300">
                       <icon name="albania" class="w-8 h-8 mr-6"></icon>

@@ -7,12 +7,14 @@ import 'dayjs/locale/mk';
 import 'dayjs/locale/tr';
 import i18n from './i18n';
 import "@/assets/css/style.css";
+import Icon from "./components/Icon";
+import './registerServiceWorker'
 
 Vue.prototype.$dayjs = dayjs;
 
 
 window.GSheetReader = require("g-sheets-api");
-Vue.component("icon", () => import('./components/Icon.vue'));
+Vue.component("icon", Icon);
 
 Vue.config.productionTip = false;
 
