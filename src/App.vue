@@ -55,10 +55,10 @@
 
         <div class="grid lg:grid-cols-2 gap-6 mt-8">
           <base-card :name="$t('nijeti')">
-            <p class="text-sm text-primary">{{ $t('nijetiArabisht') }}</p>
+            <p class="text-sm text-primary">{{ $t("nijetiArabisht") }}</p>
           </base-card>
           <base-card :name="$t('duaja')">
-            <p class="text-sm text-primary">{{ $t('duajaArabisht') }}</p>
+            <p class="text-sm text-primary">{{ $t("duajaArabisht") }}</p>
           </base-card>
         </div>
 
@@ -95,6 +95,7 @@ import BaseDate from "./components/BaseDate";
 import BaseCard from "./components/BaseCard";
 import BaseTable from "./components/BaseTable";
 import customParseFormat from "dayjs/plugin/customParseFormat";
+import PullToRefresh from "pulltorefreshjs";
 
 export default {
   name: "app",
@@ -261,6 +262,14 @@ export default {
 
       localStorage.setItem("city", value);
     }
+  },
+  mounted() {
+    PullToRefresh.init({
+      mainElement: "body",
+      onRefresh() {
+        window.location.reload();
+      }
+    });
   },
   created() {
     this.getCurrentData();
