@@ -184,120 +184,86 @@
   "city":[
     {
       "name":"Delçevë",
-      "tr":"Delçovo",
-      "mk":"Делчево",
       "shortcode":"DL",
       "value":-6
     },
     {
       "name":"Valandovë",
-      "tr":"Valandovo",
-      "mk":"Валандово",
       "shortcode":"VL",
       "value":-5
     },
     {
       "name":"Strumicë",
-      "tr":"Ustrumca",
-      "mk":"Струмица",
       "shortcode":"SR",
       "value":-5
     },
     {
       "name":"Koçanë",
-      "tr":"Koçana",
-      "mk":"Кочани",
       "shortcode":"KO",
       "value":-4
     },
     {
       "name":"Shtip",
-      "tr":"İştip",
-      "mk":"Штип",
       "shortcode":"SH",
       "value":-3
     },
     {
       "name":"Veles",
-      "tr":"Köpürlü",
-      "mk":"Велес",
       "shortcode":"VS",
       "value":-2
     },
     {
       "name":"Prilep",
-      "tr":"Prilepe",
-      "mk":"Прилеп",
       "shortcode":"PP",
       "value":-1
     },
     {
       "name":"Kumanovë",
-      "tr":"Kumanovo",
-      "mk":"Куманово",
       "shortcode":"KU",
       "value":-1
     },
     {
       "name":"Shkup",
-      "tr":"Üsküp",
-      "mk":"Скопје",
       "shortcode":"SK",
       "value":0
     },
     {
       "name":"Resnjë",
-      "tr":"Resne",
-      "mk":"Ресен",
       "shortcode":"RS",
       "value":1
     },
     {
       "name":"Manastir",
-      "tr":"Manastır",
-      "mk":"Битола",
       "shortcode":"MN",
       "value":1
     },
     {
       "name":"Tetovë",
-      "tr":"Kalkandelen",
-      "mk":"Тетово",
       "shortcode":"TE",
       "value":2
     },
     {
       "name":"Gostivar",
-      "tr":"Gostivar",
-      "mk":"Гостивар",
       "shortcode":"GV",
       "value":2
     },
     {
       "name":"Kërçovë",
-      "tr":"Kırçova",
-      "mk":"Кичево",
       "shortcode":"KI",
       "value":2
     },
     {
       "name":"Ohër",
-      "tr":"Ohri",
-      "mk":"Охрид",
       "shortcode":"OH",
       "value":5
     },
     {
       "name":"Dibër",
-      "tr":"Debre",
-      "mk":"Дебар",
       "shortcode":"DB",
       "value":5
     },
     {
       "name":"Strugë",
-      "tr":"Ustruga",
-      "mk":"Струга",
       "shortcode":"ST",
       "value":5
     }
