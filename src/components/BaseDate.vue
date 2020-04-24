@@ -3,7 +3,7 @@
     <div class="px-6 h-20 flex flex-row items-center">
       <icon name="cloud" class="w-12 h-12 mr-4"></icon>
       <p class="text-2xl font-medium text-primary">
-        {{ getDate }} <span class="font-semibold">{{ getYear }}</span>
+        {{ this.date }} <span class="font-semibold">{{ this.year }}</span>
       </p>
     </div>
   </div>
@@ -11,22 +11,6 @@
 
 <script>
 export default {
-  methods: {
-    data() {
-      return {
-        date: new Date(),
-      }
-    },
-  },
-  computed: {
-    getDate() {
-      return this.$dayjs(this.date).format("DD MMMM");
-    },
-    getYear() {
-      return this.$dayjs(this.date).format("YYYY");
-    }
-  }
+  props: ["date", "year"],
 };
 </script>
-
-<style scoped></style>

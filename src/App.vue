@@ -22,7 +22,11 @@
               :options="location"
             ></base-select>
             <!-- The Base Date shows the current date (component) -->
-            <base-date class="mt-8"></base-date>
+            <base-date
+              :year="this.$dayjs().format('YYYY')"
+              :date="this.$dayjs().format('DD MMMM')"
+              class="mt-8"
+            ></base-date>
             <!-- This Base Cards show the next sifir and iftar (component) The information comes from the data. The data is calculated from getToday() -->
             <div class="grid grid-cols-2 gap-6 mt-8">
               <base-card
@@ -71,9 +75,7 @@
 </template>
 
 <script>
-// we import the schedule from the json file
 import json from "./data/schedule.json";
-// we import all the components that we use in our app
 import Timer from "./components/Timer";
 import Logo from "./components/Logo";
 import Menu from "./components/Menu";
@@ -82,7 +84,6 @@ import BaseSelect from "./components/BaseSelect";
 import BaseDate from "./components/BaseDate";
 import BaseCard from "./components/BaseCard";
 import BaseTable from "./components/BaseTable";
-// we need this plugin for ios
 import customParseFormat from "dayjs/plugin/customParseFormat";
 
 export default {
@@ -97,12 +98,15 @@ export default {
     BaseCard,
     BaseTable
   },
-  // The language and the city are saved in the data, retreived from the local storage or default value is given
-  // The current is used for calculating the next sifir and iftar, and sends data to the timer for the timeleft
-  // The current section has the current datetime, selected city, the schedule for today, the period is for the timer as a start time (iftar or sifir)
-  // The modified sends the monthly schedule to the base-table component. This one is changed +- minutes depending on the city.
-  // The schedule is the base date, calculated for Skopje only and it doesn't change. The modified array changes by getting this data as the base
-  // The location has all the cities, their shortcode and the value (+- minutes) to be used for calculating the modified array
+
+  /* The language and the city are saved in the data, retreived from the local storage or default value is given
+   * The current is used for calculating the next sifir and iftar, and sends data to the timer for the timeleft
+   * The current section has the current datetime, selected city, the schedule for today, the period is for the timer as a start time (iftar or sifir)
+   * The modified sends the monthly schedule to the base-table component. This one is changed +- minutes depending on the city.
+   * The schedule is the base date, calculated for Skopje only and it doesn't change. The modified array changes by getting this data as the base
+   * The location has all the cities, their shortcode and the value (+- minutes) to be used for calculating the modified array
+   * */
+
   data() {
     return {
       language: localStorage.getItem("language") || "sq",
@@ -119,7 +123,9 @@ export default {
     };
   },
   methods: {
-    // We get the shortcode from city and give it to current city and we calculate the schedule for today for that city
+    /* We get the shortcode from city and give it to current city and we calculate the
+     * schedule for today for that city
+     */
     getCurrentData() {
       this.current.city = this.location.find(item => {
         return item.shortcode === this.city;
@@ -127,22 +133,25 @@ export default {
 
       this.current.schedule = this.getToday();
     },
-    // The value that is sent here, gets the data for Skopje and it gives +- minutes depending on the value of the chosen city
-    // This value is used for the timer component
+    /* The value that is sent here, gets the data for Skopje and it gives +- minutes depending on the value of the chosen city
+     * This value is used for the timer component
+     */
     getFullDate(item) {
       return this.$dayjs(item)
         .add(this.current.city.value, "minute")
         .format("YYYY-MM-DD HH:mm:ss");
     },
-    // We calculate the scheduled times for a certain city for the entire month and we calculate the minutes +- depending on the value
-    // This is used for the base table component
+    /* We calculate the scheduled times for a certain city for the entire month and we calculate the minutes +- depending on the value
+     * This is used for the base table component
+     */
     formatDate(item) {
       return this.$dayjs(item)
         .add(this.current.city.value, "minute")
         .format("HH:mm");
     },
-    // We get the schedule for today. But, if iftar has passed, we add +1 day and get the schedule for tomorrow.
-    // This value is used for the timer component
+    /* We get the schedule for today. But, if iftar has passed, we add +1 day and get the schedule for tomorrow.
+     * This value is used for the timer component
+     */
     getToday(day = 0) {
       let date = this.$dayjs(this.current.date)
         .add(day, "day")
@@ -152,14 +161,17 @@ export default {
         return item.data === date.toString();
       });
     },
-    // The schedule is received as an object and we want to transform it into an array.
+    /* The schedule is received as an object and we want
+     * to transform it into an array.
+     */
     parseDate(name) {
       return this.schedule.map(item => {
         return this.formatDate(item[name]);
       });
     },
-    // After we get the data as an array from parseDate, we can make a new array for the base table component
-    // The output is saved in the modified data
+    /* After we get the data as an array from parseDate, we can make a new array for the base table component
+     * The output is saved in the modified data
+     */
     getData() {
       let sifir = Object.values(this.parseDate("sifir"));
       let iftar = Object.values(this.parseDate("iftar"));
@@ -178,36 +190,50 @@ export default {
       this.modified = output;
     },
 
-    // This method checks if the current time has passed sifir or iftar and it sends to the timer the correct value for starting.
+    /* This method checks if the current time has passed sifir or iftar
+     *  and it sends to the timer the correct value for starting.
+     *
+     *  1. We check the difference of the current moment and the current iftar on the schedule
+     *  2. We check the difference of the current moment and the current sifir on the schedule
+     *  3. If the difference is greater, the sifir hasn't passed yet. We sent the sifir as the start time
+     *  4. If the difference is smaller for sifir, but greater for iftar, the sifir
+     *     has passed but the iftar hasn't passed yet. We sent the iftar as the start time.
+     *  5. If both the sifir and iftar are smaller, than both have passed.
+     *     We need to calculate the sifir for the next day  We sent the sifir of the next day as the start time
+     *
+     *
+     */
+
     checkTimePeriod() {
-      // We check the difference of the current moment and the current iftar on the schedule
-      const diffIftar = this.$dayjs(this.current.schedule.iftar).diff(
+      const iftarTime = this.getFullDate(this.current.schedule.iftar);
+      const sifirTime = this.getFullDate(this.current.schedule.sifir);
+
+      const diffIftar = this.$dayjs(iftarTime).diff(
         this.current.date,
-        "hour",
+        "millisecond",
         true
       );
-      // We check the difference of the current moment and the current sifir on the schedule
-      const diffSifir = this.$dayjs(this.current.schedule.sifir).diff(
+
+      const diffSifir = this.$dayjs(sifirTime).diff(
         this.current.date,
-        "hour",
+        "millisecond",
         true
       );
-      // If the difference is greater, the sifir hasn't passed yet. We sent the sifir as the start time
+
       if (diffSifir > 0) {
         this.current.period = this.getFullDate(this.current.schedule.sifir);
       }
-      // If the difference is smaller for sifir, but greater for iftar, the sifir has passed but the iftar hasn't passed yet.
-      // We sent the iftar as the start time
+
       if (diffSifir < 0 && diffIftar > 0) {
         this.current.period = this.getFullDate(this.current.schedule.iftar);
       }
-      // If both the sifir and iftar are smaller, than both have passed. We need to calculate the sifir for the next day
-      // We sent the sifir of the next day as the start time
+
       if (diffSifir < 0 && diffIftar < 0) {
         let date = this.getToday(1);
         this.current.period = this.getFullDate(date.sifir);
       }
     },
+
     // Here we set the value for the language of the app and dayjs
     setLocale(string) {
       this.$i18n.locale = string;
@@ -225,11 +251,6 @@ export default {
 
       localStorage.setItem("city", value);
     }
-  },
-  mounted() {
-    this.$on("setLocale", event => {
-      console.log(event);
-    });
   },
   created() {
     this.getCurrentData();

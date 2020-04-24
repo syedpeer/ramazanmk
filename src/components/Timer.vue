@@ -33,7 +33,7 @@ export default {
       this.resetButton = true;
     },
     resetTimer() {
-      this.totalTime = 25 * 60;
+      this.totalTime = 0;
       clearInterval(this.timer);
       this.timer = null;
       this.resetButton = false;
@@ -46,17 +46,14 @@ export default {
     }
   },
   computed: {
-    hours: function() {
-      const hours = Math.floor(this.totalTime / 3600);
-      return this.padTime(hours);
+    hours() {
+      return this.padTime(Math.floor(this.totalTime / 3600));
     },
-    minutes: function() {
-      const minutes = Math.floor((this.totalTime - this.hours * 3600) / 60);
-      return this.padTime(minutes);
+    minutes() {
+      return this.padTime(Math.floor((this.totalTime - this.hours * 3600) / 60));
     },
-    seconds: function() {
-      const seconds = Math.floor(this.totalTime - this.hours * 3600 - this.minutes * 60);
-      return this.padTime(seconds);
+    seconds() {
+      return this.padTime(Math.floor(this.totalTime - this.hours * 3600 - this.minutes * 60));
     }
   },
   created() {
@@ -67,6 +64,11 @@ export default {
       this.current = this.start;
       this.resetTimer();
       this.startTimer();
+    },
+    totalTime(value) {
+      if (value < 1) {
+        this.resetTimer();
+      }
     }
   },
 };
