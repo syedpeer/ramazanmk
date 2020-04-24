@@ -12,8 +12,6 @@ import './registerServiceWorker'
 
 Vue.prototype.$dayjs = dayjs;
 
-
-window.GSheetReader = require("g-sheets-api");
 Vue.component("icon", Icon);
 
 Vue.config.productionTip = false;

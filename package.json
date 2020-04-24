@@ -26,7 +26,6 @@
     "eslint": "^5.16.0",
     "eslint-plugin-prettier": "^3.1.0",
     "eslint-plugin-vue": "^5.0.0",
-    "g-sheets-api": "^1.0.3",
     "prettier": "^1.18.2",
     "purgecss": "^2.1.2",
     "vue-template-compiler": "^2.6.10"
