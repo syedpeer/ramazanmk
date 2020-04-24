@@ -9,6 +9,11 @@
 </template>
 
 <script>
+import Vue from 'vue';
+import VueConfetti from "vue-confetti";
+
+Vue.use(VueConfetti);
+
 export default {
   props: ["start"],
   data() {
@@ -22,7 +27,11 @@ export default {
   methods: {
     startTimer() {
       let moment = this.$dayjs();
-      let remaining = this.$dayjs(this.current).diff(moment, "millisecond", true);
+      let remaining = this.$dayjs(this.current).diff(
+        moment,
+        "millisecond",
+        true
+      );
 
       this.totalTime = remaining / 1000;
       this.timer = setInterval(() => this.countdown(), 1000);
@@ -50,10 +59,14 @@ export default {
       return this.padTime(Math.floor(this.totalTime / 3600));
     },
     minutes() {
-      return this.padTime(Math.floor((this.totalTime - this.hours * 3600) / 60));
+      return this.padTime(
+        Math.floor((this.totalTime - this.hours * 3600) / 60)
+      );
     },
     seconds() {
-      return this.padTime(Math.floor(this.totalTime - this.hours * 3600 - this.minutes * 60));
+      return this.padTime(
+        Math.floor(this.totalTime - this.hours * 3600 - this.minutes * 60)
+      );
     }
   },
   created() {
@@ -68,8 +81,15 @@ export default {
     totalTime(value) {
       if (value < 1) {
         this.resetTimer();
+        this.$confetti.start();
+
+        setTimeout(() => {
+          this.$confetti.stop();
+          location.reload();
+        }, 10000);
+
       }
     }
-  },
+  }
 };
 </script>
