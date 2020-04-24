@@ -52,6 +52,16 @@
             <base-table :items="this.modified"></base-table>
           </div>
         </div>
+
+        <div class="grid lg:grid-cols-2 gap-6 mt-8">
+          <base-card :name="$t('nijeti')">
+            <p class="text-sm text-primary">{{ $t('nijetiArabisht') }}</p>
+          </base-card>
+          <base-card :name="$t('duaja')">
+            <p class="text-sm text-primary">{{ $t('duajaArabisht') }}</p>
+          </base-card>
+        </div>
+
         <!-- This Base Card shows other important event dates within Ramadan (component) -->
         <div class="grid lg:grid-cols-3 gap-6 mt-8">
           <base-card
