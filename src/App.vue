@@ -141,9 +141,12 @@ export default {
       this.current.city = this.location.find(item => {
         return item.shortcode === this.city;
       });
-
-      this.current.schedule = this.getToday();
     },
+
+    getSchedule(day = 0) {
+      this.current.schedule = this.getToday(day);
+    },
+
     /* The value that is sent here, gets the data for Skopje and it gives +- minutes depending on the value of the chosen city
      * This value is used for the timer component
      */
@@ -242,6 +245,9 @@ export default {
       if (diffSifir < 0 && diffIftar < 0) {
         let date = this.getToday(1);
         this.current.period = this.getFullDate(date.sifir);
+
+        // Change the schedule for next day
+        this.getSchedule(1);
       }
     },
 
@@ -258,6 +264,7 @@ export default {
     city(value) {
       this.getCurrentData();
       this.checkTimePeriod();
+      this.getSchedule();
       this.getData();
 
       localStorage.setItem("city", value);
@@ -273,6 +280,7 @@ export default {
   },
   created() {
     this.getCurrentData();
+    this.getSchedule();
     this.getData();
     this.checkTimePeriod();
 
