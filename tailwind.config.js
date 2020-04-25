@@ -9,8 +9,12 @@ module.exports = {
     },
     extend: {
       colors: {
+        grey: {
+          50: "#C7C7CC"
+        },
         primary: "#3D003E",
-        secondary: "#5856D6"
+        secondary: "#5856D6",
+        accent: "#00F5FF",
       },
       boxShadow: {
         input: "0px 12px 30px rgba(0, 0, 0, 0.16)"
