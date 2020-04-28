@@ -5,7 +5,8 @@
     <div
       v-for="(item, index) in this.items"
       class="flex flex-row py-4 px-6 border-b border-grey-50 relative"
-
+      :class="{'border-b' : index + 1 !== items.length}"
+      :key="index"
     >
       <div
         v-if="today === item.data"
