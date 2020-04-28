@@ -4,7 +4,7 @@ module.exports = {
       sans: "Montserrat, -apple-system, BlinkMacSystemFont"
     },
     container: {
-      padding: '1.5rem',
+      padding: "1.5rem",
       center: true
     },
     extend: {
@@ -14,17 +14,17 @@ module.exports = {
         },
         primary: "#3D003E",
         secondary: "#5856D6",
-        accent: "#00F5FF",
+        accent: "#00F5FF"
       },
       boxShadow: {
         input: "0px 12px 30px rgba(0, 0, 0, 0.16)"
       },
       borderRadius: {
         xl: "16px",
-        "2xl": "48px",
+        "2xl": "48px"
       },
       maxHeight: {
-        "50": "550px",
+        "50": "550px"
       }
     }
   },

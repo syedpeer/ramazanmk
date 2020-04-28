@@ -274,7 +274,7 @@ export default {
     PullToRefresh.init({
       mainElement: "body",
       onRefresh() {
-        window.location.reload();
+        window.location.reload(true);
       }
     });
   },

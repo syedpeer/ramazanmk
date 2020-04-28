@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import Vue from 'vue';
+import Vue from "vue";
 import VueConfetti from "vue-confetti";
 
 Vue.use(VueConfetti);
@@ -87,7 +87,6 @@ export default {
           this.$confetti.stop();
           location.reload();
         }, 10000);
-
       }
     }
   }

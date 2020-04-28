@@ -7,7 +7,7 @@ module.exports = {
   rules: {
     "no-console": process.env.NODE_ENV === "production" ? "error" : "off",
     "no-debugger": process.env.NODE_ENV === "production" ? "error" : "off",
-    "singleline": 3,
+    singleline: 3
   },
   parserOptions: {
     parser: "babel-eslint"
