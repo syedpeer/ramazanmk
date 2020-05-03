@@ -1,5 +1,6 @@
 <template>
   <div
+    ref="table"
     class="w-full text-primary lg:overflow-y-auto bg-white shadow-input rounded-tl-2xl lg:rounded-tl-2xl lg:rounded-bl-2xl lg:max-h-50 max-h-30 overflow-y-auto"
   >
     <div
@@ -11,8 +12,8 @@
       <div
         v-if="today === item.data"
         class="absolute left-0 top-0 w-2 h-full bg-accent"
-        id="scrollbarToday"
-        ref="scrollbarToday"
+        id="today"
+        ref="today"
       ></div>
       <template v-if="checkDate(item.data)">
         <div class="w-1/2 flex flex-col text-gray-400">
@@ -77,6 +78,12 @@ export default {
 
       return currentDay >= 1;
     }
+  },
+  mounted() {
+    let table = this.$refs.table;
+    let item = document.getElementById("today");
+    item = item.getBoundingClientRect();
+    table.scrollTop = item.top - 200;
   }
 };
 </script>
