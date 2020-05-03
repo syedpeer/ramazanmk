@@ -277,6 +277,8 @@ export default {
         window.location.reload(true);
       }
     });
+    const scrollbarToday = document.getElementById("scrollbarToday");
+    scrollbarToday.scrollIntoView(true);
   },
   created() {
     this.getCurrentData();

@@ -11,6 +11,8 @@
       <div
         v-if="today === item.data"
         class="absolute left-0 top-0 w-2 h-full bg-accent"
+        id="scrollbarToday"
+        ref="scrollbarToday"
       ></div>
       <template v-if="checkDate(item.data)">
         <div class="w-1/2 flex flex-col text-gray-400">
