@@ -278,7 +278,7 @@ export default {
       }
     });
     const scrollbarToday = document.getElementById("scrollbarToday");
-    scrollbarToday.scrollIntoView(true);
+    scrollbarToday.scrollIntoView({block: "center"});
   },
   created() {
     this.getCurrentData();

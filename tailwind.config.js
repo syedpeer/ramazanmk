@@ -24,7 +24,8 @@ module.exports = {
         "2xl": "48px"
       },
       maxHeight: {
-        "50": "550px"
+        "50": "550px",
+        "30": "350px"
       }
     }
   },

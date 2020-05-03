@@ -1,6 +1,6 @@
 <template>
   <div
-    class="w-full text-primary lg:overflow-y-auto bg-white shadow-input rounded-tl-2xl lg:rounded-tl-2xl lg:rounded-bl-2xl lg:max-h-50"
+    class="w-full text-primary lg:overflow-y-auto bg-white shadow-input rounded-tl-2xl lg:rounded-tl-2xl lg:rounded-bl-2xl lg:max-h-50 max-h-30 overflow-y-auto"
   >
     <div
       v-for="(item, index) in this.items"
